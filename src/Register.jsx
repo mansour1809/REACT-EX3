@@ -21,6 +21,12 @@ function Register() {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
+
+
+
+
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
