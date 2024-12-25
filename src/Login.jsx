@@ -24,8 +24,8 @@ function Login({ onLogin }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+      <input type="text" name="username" placeholder="Username" onChange={(e)=> handleChange("username" , e)} required />
+      <input type="password" name="password" placeholder="Password" onChange={(e)=> handleChange("password" , e)} required />
       <button type="submit">Login</button>
     </form>
   );
