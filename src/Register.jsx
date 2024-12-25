@@ -18,13 +18,16 @@ function Register() {
    });
 
   const handleChange = (name , e) => {
-    setFormData({ ...formData, [name]: e.target.value });
+    if (name === "number") {
+      setFormData({ ...formData, [name]: parseInt(e.target.value, 10) });
+    } else if (name === "birthDate") {
+      setFormData({ ...formData, [name]: new Date(e.target.value) });
+    } else if (name === "img") {
+      setFormData({ ...formData, [name]: e.target.files[0] }); 
+    } else {
+      setFormData({ ...formData, [name]: e.target.value });
+    }
   };
-
-
-
-
-
 
   
   const handleSubmit = (e) => {
