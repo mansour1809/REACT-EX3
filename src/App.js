@@ -1,4 +1,5 @@
-import  { useState, useEffect } from 'react';
+// App.js
+import React, { useState, useEffect } from 'react';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
 import Profile from './Profile.jsx';
@@ -18,7 +19,7 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px' }}>
+    <div>
       {user ? (
         user.username === 'admin' ? (
           <SystemAdmin user={user} onLogout={handleLogout} />
@@ -26,10 +27,10 @@ function App() {
           <Profile user={user} onLogout={handleLogout} />
         )
       ) : (
-        <>
+        <div>
           <Login onLogin={setUser} />
           <Register />
-        </>
+        </div>
       )}
     </div>
   );
