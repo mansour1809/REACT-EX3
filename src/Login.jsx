@@ -1,22 +1,29 @@
 // Login.jsx
 import  { useState } from 'react';
+import Profile from './Profile';
 
-function Login({ onLogin }) {
 
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
+function Login(  ) {
+const [username, setUsername] = useState('')
+const [password, setPassword] = useState('')
+  const handleChange = (name,e) => {
+if (name === 'password') {
+  setPassword(e.target.value)
+}
+else
+setUsername(e.target.value)
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(u => u.username === credentials.username && u.password === credentials.password);
+    const user = users.find(u => u.username === username && u.password === password);
     if (user) {
       sessionStorage.setItem('user', JSON.stringify(user));
-      onLogin(user);
+      // props.onLogin(user);
+      console.log('hello world');
+      <Profile/>
     } else {
       alert('Invalid credentials');
     }
