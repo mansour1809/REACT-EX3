@@ -1,7 +1,8 @@
 // Login.jsx
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 function Login({ onLogin }) {
+
   const [credentials, setCredentials] = useState({ username: '', password: '' });
 
   const handleChange = (e) => {
