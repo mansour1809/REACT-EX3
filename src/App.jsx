@@ -1,8 +1,9 @@
 import  { useState, useEffect } from 'react';
-import Register from './Register.jsx';
-import Login from './Login.jsx';
-import Profile from './Profile.jsx';
-import SystemAdmin from './SystemAdmin.jsx';
+import Register from './Components/Register.jsx';
+import Login from './Components/Login.jsx';
+import Profile from './Components/Profile.jsx';
+import SystemAdmin from './Components/SystemAdmin.jsx';
+import { BrowserRouter, Routes,  Route, Link } from 'react-router-dom';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -18,20 +19,23 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px' }}>
-      {user ? (
-        user.username === 'admin' ? (
-          <SystemAdmin user={user} onLogout={handleLogout} />
-        ) : (
-          <Profile user={user} onLogout={handleLogout} />
-        )
-      ) : (
-        <>
-          <Login onLogin={setUser} />
-          <Register />
-        </>
-      )}
-    </div>
+    <>
+    <nav>
+      <button><Link to="/">Login</Link></button>
+      <button><Link to="/register">register</Link></button>
+      <button><Link to="/profile">profile</Link></button>
+      <button><Link to="/systemAdmin">systemAdmin</Link></button>
+      <button><Link to="/systemAdmin">systemAdmin</Link></button>
+    </nav>
+    
+    <Routes>
+    {/* <Route path="/" element={}></Route> */}
+    <Route path="/" element={<Login/>}></Route>
+    <Route path="/register" element={<Register/>}></Route>
+    <Route path="/profile" element={<Profile/>}></Route>
+    <Route path="/systemAdmin" element={<SystemAdmin/>}></Route>
+    </Routes>
+    </>
   );
 }
 
