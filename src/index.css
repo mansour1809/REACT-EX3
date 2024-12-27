@@ -45,6 +45,7 @@
   max-width: 500px;
   margin: 2rem auto;
   text-align: center;
+  padding-bottom: -5px;
  }
  
  input {
@@ -55,16 +56,41 @@
   border-radius: 4px;
  }
  
- button {
-  background: #007bff;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 10px;
- }
+
+button {
+ width: 80%;
+ padding: 12px;
+ margin-top: 20px;
+ background: #0066cc;
+ color: white;
+ border: none;
+ border-radius: 4px;
+ font-size: 16px;
+ cursor: pointer;
+}
  
  button:hover {
   background: #0056b3;
+ }
+ /* .errMsg{
+  margin-top: 5;
+ } */
+
+ #loginBtn{
+  margin: 7px 0 7px 0;
+ }
+
+ .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  background: #c1daf3;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+ }
+ .back-button:hover{
+  background: #8fbeec;
  }
