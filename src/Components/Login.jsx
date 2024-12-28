@@ -8,10 +8,10 @@ import PropTypes from "prop-types";
 function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-const [ErrorMsg, setErrorMsg] = useState('')
+  const [ErrorMsg, setErrorMsg] = useState("");
 
   const handleChange = (name, e) => {
-setErrorMsg('')
+    setErrorMsg("");
     if (name === "password") {
       setPassword(e.target.value);
     } else setUsername(e.target.value);
@@ -20,30 +20,16 @@ setErrorMsg('')
   const submit = (e) => {
     e.preventDefault();
     loginUser(username, password);
-    // const valid =props.users.find(
-    //   (u) => u.username === username && u.password === password
-    // );
-    // if (valid) {
-    //   loginUser(username,password)
-    //   sessionStorage.setItem("user", JSON.stringify(user));
-    //   // props.onLogin(user);
-    //   console.log("hello world");
-    //   <Profile />;
-    // } else {
-    //   alert("Invalid credentials");
-    // }
   };
 
   const loginUser = (username, password) => {
     const valid = props.users.find((u) =>
       u.username == username && u.password == password ? u : false
     );
-    if(valid)
-      {
-       sessionStorage.setItem("user", JSON.stringify(valid));
-      <Navigate to="/profile"/>
-      } 
-    else setErrorMsg("שם משתמש או סיסמה לא נכונים") 
+    if (valid) {
+      sessionStorage.setItem("user", JSON.stringify(valid));
+      <Navigate to="/profile" />;
+    } else setErrorMsg("שם משתמש או סיסמה לא נכונים");
   };
 
   return (
@@ -62,12 +48,15 @@ setErrorMsg('')
         onChange={(e) => handleChange("password", e)}
         required
       />
-      <span className="errMsg" style={{color:'red'}}>
-        { ErrorMsg} </span>
-        <br />
-      <button id="loginBtn" type="submit">כניסה</button>
+      <span className="errMsg" style={{ color: "red" }}>
+        {ErrorMsg}{" "}
+      </span>
       <br />
-      אין לך עדיין משתמש? <Link to="/register">הרשמה</Link> 
+      <button id="loginBtn" type="submit">
+        כניסה
+      </button>
+      <br />
+      אין לך עדיין משתמש? <Link to="/register">הרשמה</Link>
     </form>
   );
 }
