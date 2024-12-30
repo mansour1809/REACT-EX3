@@ -24,12 +24,9 @@ function Register() {
 
   const handleBlur = (name, e) => {
     console.log(formData)
-    if(e.target.value){//checking validations only if the input is not empty
+    if(e.target.value && name !=='img'){//checking validations only if the input is not empty
     name === 'confirmPassword' ? 
     setErrors((prev) => ({ ...prev, [name]: Validations(name, e.target.value , formData.password) }))
-    :name === 'img'  ?
-    ////////////////////////////////neeeeeeeeeeeeed to modifyyyyyyyyyyy!!!
-    setErrors((prev) => ({ ...prev, [name]: Validations(name, e.target.files[0]) }))
     :setErrors((prev) => ({ ...prev, [name]: Validations(name, e.target.value) }));
     }
   };
@@ -38,6 +35,15 @@ function Register() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
     setFormData({ ...formData, [name]: e.target.value });
 
+    
+    if(name === 'img'){
+const validation =Validations(name, e.target.files[0])
+console.log('validation =', validation)
+    setErrors((prev) => ({ ...prev, [name]:  validation}))
+    if(validation)
+      e.target.value=null
+    
+  }
     // console.log(formData)
     // setFormData({ ...formData, [name]: validation.value});
     // console.log(formData)
