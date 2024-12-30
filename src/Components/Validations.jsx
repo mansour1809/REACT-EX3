@@ -3,7 +3,7 @@ import { cities } from "../assets/cities";
 const Validations = (name, value, password = null) => {
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,}$/;
   const hebrewLettersRegex = /^[\u0590-\u05FF\s]+$/;
-  const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/;
+  const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
   const userNameRegex = /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\/]*$/;
 
   switch (name) {

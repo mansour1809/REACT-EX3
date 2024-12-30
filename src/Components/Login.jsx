@@ -28,7 +28,7 @@ function Login(props) {
     );
     if (valid) {
       sessionStorage.setItem("user", JSON.stringify(valid));
-      <Navigate to="/profile" />;
+      <Navigate to="/profile" users={props.users} />;
     } else setErrorMsg("שם משתמש או סיסמה לא נכונים");
   };
 

@@ -6,7 +6,7 @@ import Validations from "./Validations";
 import { cities } from "../assets/cities";
 import PropTypes from "prop-types";
 
-function Register() {
+function Register(props) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -23,66 +23,30 @@ function Register() {
   const [errors, setErrors] = useState({});
 
   const handleBlur = (name, e) => {
-    console.log(formData)
-    if(e.target.value && name !=='img'){//checking validations only if the input is not empty
-    name === 'confirmPassword' ? 
-    setErrors((prev) => ({ ...prev, [name]: Validations(name, e.target.value , formData.password) }))
-    :setErrors((prev) => ({ ...prev, [name]: Validations(name, e.target.value) }));
+    console.log(formData);
+    if (e.target.value && name !== "img") {
+      //checking validations only if the input is not empty
+      name === "confirmPassword"
+        ? setErrors((prev) => ({
+            ...prev,
+            [name]: Validations(name, e.target.value, formData.password),
+          }))
+        : setErrors((prev) => ({
+            ...prev,
+            [name]: Validations(name, e.target.value),
+          }));
     }
   };
 
   const handleChange = (name, e) => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
     setFormData({ ...formData, [name]: e.target.value });
-
-    
-    if(name === 'img'){
-const validation =Validations(name, e.target.files[0])
-console.log('validation =', validation)
-    setErrors((prev) => ({ ...prev, [name]:  validation}))
-    if(validation)
-      e.target.value=null
-    
-  }
-    // console.log(formData)
-    // setFormData({ ...formData, [name]: validation.value});
-    // console.log(formData)
-
-    //  if (name === "birthDate") {
-    //   const selectedDate = new Date(e.target.value);
-    //   const today = new Date();
-    //   let age = today.getFullYear() - selectedDate.getFullYear();
-    //   // Adjust age calculation if the birthday hasn't occurred this year yet
-    //   const monthDiff = today.getMonth() - selectedDate.getMonth();
-    //   if (
-    //     monthDiff < 0 ||
-    //     (monthDiff === 0 && today.getDate() < selectedDate.getDate())
-    //   ) {
-    //     age--;
-    //   }
-    //   // Validate age range
-    //   if (age < 18 || age > 120) {
-    //     alert("You must be between 18 and 120 years old.");
-    //     return; // Stop further processing
-    //   }
-
-    //   setFormData({ ...formData, [name]: new Date(e.target.value) });
-    // } else if (name === "img") {
-    //   if (e.target.files[0]) {
-    //     // Validate file type
-    //     const validTypes = ["/jpeg", "/jpg"];
-
-    //     if (!validTypes.includes(e.target.files[0].type)) {
-    //       alert("Please upload a JPEG or JPG file.");
-    //       return; // Stop processing if the file is invalid
-    //     }
-    //     else
-    //     setFormData({ ...formData, [name]: e.target.files[0] });
-    //   }
-    // } else {
-    //   setFormData({ ...formData, [name]: e.target.value });
-    // }
-    // console.log(formData);
+    if (name === "img") {
+      const validation = Validations(name, e.target.files[0]);
+      console.log("validation =", validation);
+      setErrors((prev) => ({ ...prev, [name]: validation }));
+      if (validation) e.target.value = null;
+    }
   };
 
   const handleSubmit = (e) => {
@@ -91,13 +55,16 @@ console.log('validation =', validation)
       alert("Passwords do not match");
       return;
     }
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push(formData);
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("User registered successfully");
+
   };
 
-  console.log(errors);
+  const registerUser = ()=>{
+    const users = props.users;  // get the existing users from local storage
+    users.push(formData);  // add the new user to the array
+    localStorage.setItem("users", JSON.stringify(users));// save to the local storage 
+    alert("User registered successfully");
+  }
+
   return (
     <>
       <Link to="/" className="back-button">
@@ -140,7 +107,7 @@ console.log('validation =', validation)
           required
         />
         <ErrMsg msg={errors["img"]} />
-        
+
         <input
           type="text"
           name="firstName"
@@ -233,4 +200,7 @@ function ErrMsg(props) {
 
 ErrMsg.propTypes = {
   msg: PropTypes.string,
+};
+Register.propTypes = {
+  users: PropTypes.array.isRequired,
 };
