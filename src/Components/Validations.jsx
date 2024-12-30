@@ -46,9 +46,9 @@ const Validations = (name, value, password = null) => {
         : "need to choose from the list...";
 
     case "img":
-      return (value.type !== '/jpeg' && value.type !== '/jpg')
-        ? ""
-        : "the file need to be in jpeg or jpg format...";
+      return (( value.type !== 'image/jpeg' && value.type !== 'image/jpg'))
+        ? "the file need to be in jpeg or jpg format..."
+        : "";
 
     default:
       break;
@@ -71,14 +71,5 @@ const validDate = (value) => {
   return age < 18 || age > 120 ? false : true;
 };
 
-//     // setFormData({ ...formData, [name]: new Date(e.target.value) });
-// } else if (props.name === "img") {
-//       const validTypes = ["/jpeg", "/jpg"];
-//     return(!validTypes.includes(props.e.target.files[0].type))
-//     ? false
-//      : props.e.target.files[0]
-// }
-// else
-// return props.e.target.value
 
 export default Validations;
