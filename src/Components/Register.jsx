@@ -1,12 +1,13 @@
 // Register.jsx
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Validations from "./Validations";
 
 import { cities } from "../assets/cities";
 import PropTypes from "prop-types";
 
 function Register(props) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -67,24 +68,25 @@ function Register(props) {
   const registerUser = () => {
     setErrors({});
     const users = props.users; // get the existing users from local storage
-    console.log(users)
     const isExist = users.find(u => u.username === formData.username )
-    console.log(isExist)
     if(isExist) // checking if the userName exist
       setErrors({'username' : "user name already exist"})
      else{ 
       users.push(formData); // add the new user to the array
     localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
-    alert("User registered successfully");
+    alert("User registered successfully ,you can login");
+    console.log("form dat usname",formData.username)
+    navigate("/", { state: { users: users , lastRegistered : formData.username , lastRegisteredPass : formData.password} });
+
   }
   };
 
   return (
-    <>
+    <div style={{ paddingTop:50}}>
       <Link to="/" className="back-button">
         Back to Login
       </Link>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <input
           type="text"
           name="username"
@@ -201,7 +203,7 @@ function Register(props) {
 
         <button type="submit">Register</button>
       </form>
-    </>
+    </div>
   );
 }
 
