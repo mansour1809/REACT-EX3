@@ -6,13 +6,23 @@ const Validations = (name, value, password = null) => {
   const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
   const userNameRegex = /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\/]*$/;
 
+  const isExist = (name)=>
+    {
+    const users = JSON.parse(localStorage.getItem("users")) || []
+    
+    const isE = users.find(u => u.name === name)
+    return isE ? true : false
+    }
+    
   switch (name) {
     case "username":
       return !userNameRegex.test(value)
         ? "invalid , should be..."
         : value.length > 60
         ? "the text should be less than 60 charachters"
-        : "";
+        : isExist(name)
+        ?"the username already exist, choose diff.."
+        :"";
     case "password":
       return !passwordRegex.test(value) ? "password need to contain...." : "";
 
@@ -53,6 +63,7 @@ const Validations = (name, value, password = null) => {
     default:
       break;
   }
+
 };
 
 const validDate = (value) => {
@@ -70,6 +81,8 @@ const validDate = (value) => {
   // Validate age range
   return age < 18 || age > 120 ? false : true;
 };
+
+
 
 
 export default Validations;

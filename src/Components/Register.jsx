@@ -23,9 +23,8 @@ function Register(props) {
   const [errors, setErrors] = useState({});
 
   const handleBlur = (name, e) => {
-    console.log(formData);
     if (e.target.value && name !== "img") {
-      //checking validations only if the input is not empty
+      //checking validations only if the input is not empty and not a file input
       name === "confirmPassword"
         ? setErrors((prev) => ({
             ...prev,
@@ -43,7 +42,6 @@ function Register(props) {
     setFormData({ ...formData, [name]: e.target.value });
     if (name === "img") {
       const validation = Validations(name, e.target.files[0]);
-      console.log("validation =", validation);
       setErrors((prev) => ({ ...prev, [name]: validation }));
       if (validation) e.target.value = null;
     }
@@ -51,19 +49,35 @@ function Register(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+    const formErrors = {};
+    //double check for validaitons after submit
+    Object.keys(formData).forEach((name) => {
+      if (name !== "img") {
+        const validation =
+          name !== "confirmPassword" //need to send also password when validate confirmPasswird
+            ? Validations(name, formData[name])
+            : Validations(name, formData[name], formData.password);
+        if (validation) formErrors[name] = validation;
+      }
+    });
 
+    Object.keys(formErrors).length > 0 ? setErrors(formErrors) : registerUser();//if there is no errors, register
   };
 
-  const registerUser = ()=>{
-    const users = props.users;  // get the existing users from local storage
-    users.push(formData);  // add the new user to the array
-    localStorage.setItem("users", JSON.stringify(users));// save to the local storage 
+  const registerUser = () => {
+    setErrors({});
+    const users = props.users; // get the existing users from local storage
+    console.log(users)
+    const isExist = users.find(u => u.username === formData.username )
+    console.log(isExist)
+    if(isExist) // checking if the userName exist
+      setErrors({'username' : "user name already exist"})
+     else{ 
+      users.push(formData); // add the new user to the array
+    localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
     alert("User registered successfully");
   }
+  };
 
   return (
     <>
@@ -156,6 +170,7 @@ function Register(props) {
           list="cities"
           onChange={(e) => handleChange("city", e)}
           onBlur={(e) => handleBlur("city", e)}
+          required
         />
         <datalist id="cities">
           {cities.map((city) => (
@@ -171,6 +186,7 @@ function Register(props) {
           // title="שם הרחוב צריך להיות באותיות עברית בלבד"
           onChange={(e) => handleChange("street", e)}
           onBlur={(e) => handleBlur("street", e)}
+          required
         />
         <ErrMsg msg={errors["street"]} />
 
@@ -180,6 +196,7 @@ function Register(props) {
           placeholder="מספר רחוב"
           onChange={(e) => handleChange("number", e)}
           min={0}
+          required
         />
 
         <button type="submit">Register</button>
