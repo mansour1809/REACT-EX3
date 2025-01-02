@@ -94,3 +94,16 @@ button {
  .back-button:hover{
   background: #8fbeec;
  }
+
+.input-field[placeholder="Username"]:not(:focus),
+.input-field[placeholder="Password"]:not(:focus) {
+  background-color: #f0f8ff; /* Light blue to indicate auto-filled field */
+  border-color: #5fb8f4;
+  border-width: 1.7px;
+
+}
+
+.input-field:focus {
+  background-color: #ffffff; /* White when focused */
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}

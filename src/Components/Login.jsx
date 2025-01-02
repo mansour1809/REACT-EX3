@@ -1,83 +1,102 @@
 // Login.jsx
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
 import "../index.css";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 
 function Login(props) {
-  const {state} = useLocation()
-  const [username, setUsername] = useState(state?.lastRegistered || "");
-  const [password, setPassword] = useState(state?.lastRegisteredPass,"");
+  const { register, handleSubmit } = useForm();
+  const { state } = useLocation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [ErrorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const allUsers = state?.users || props.users;
+  const [loginSuccess, setLoginSuccess] = useState(false); // Track login success
 
-  const allUsers = state?.users || props.users
-
-
-  const handleChange = (name, e) => {
-    setErrorMsg("");
-    if (name === "password") {
-      setPassword(e.target.value);
-    } else setUsername(e.target.value);
-  };
-
-  const submit = (e) => {
-    e.preventDefault();
+  const submit = () => {
     loginUser(username, password);
   };
 
   const loginUser = (username, password) => {
-    if(username === "admin" && password === "ad12343211ad")
-    {
-      sessionStorage.setItem("user", JSON.stringify({'username':username , 'password':password}));
-alert('welcome , ',{username})      
-      navigate("/systemAdmin", { state: { users: allUsers } });
+    if (username === "admin" && password === "ad12343211ad") {
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({ username: username, password: password })
+      );
+      setLoginSuccess(true); // Set success
+      setTimeout(() =>navigate("/systemAdmin", { state: { users: allUsers } }), 1200);
+       return;
     }
-    const valid = allUsers.find((u) =>
-      u.username == username && u.password == password ? u : false
-    );
+    const valid = allUsers.find((u) => u.username == username && u.password == password ? u : false);
     if (valid) {
       sessionStorage.setItem("user", JSON.stringify(valid));
-alert('welcome , ',{username})
-      navigate("/profile", { state: { user: valid } });
+      setLoginSuccess(true); // Set success
+      setTimeout(() => navigate("/profile", { state: { user: valid } }), 1200); // redirect to profile page
     } else setErrorMsg("שם משתמש או סיסמה לא נכונים");
   };
 
+  useEffect(() => {
+    // fill the inputs id we route from the register
+        if (state?.lastRegistered) {
+      // setLoginSuccess(true); // Set success
+        setUsername(state.lastRegistered);
+        setPassword(state.lastRegisteredPass);
+        // ניקוי ה-state כדי שלא יישמר בהיסטוריה
+        window.history.replaceState({}, document.title);//clear the state value
+    } 
+}, [state]);
+
   return (
-    <form onSubmit={submit} style={{marginTop:100}}>
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => handleChange("username", e)}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => handleChange("password", e)}
-        required
-      />
-      <span className="errMsg" style={{ color: "red" }}>
-        {ErrorMsg}{" "}
-      </span>
-      <br />
-      <button id="loginBtn" type="submit">
-        כניסה
-      </button>
-      <br />
-      אין לך עדיין משתמש? <Link to="/register">הרשמה</Link>
-    </form>
+    <>
+      {loginSuccess ? (
+        <div className="spinner-container">
+        <div className="spinner"></div>
+        <p style={{ color: "green" }}>Welcome! , {username}</p>
+      </div>
+      ) : (
+        <form onSubmit={submit} style={{ marginTop: 100 }}>
+          <div>
+            <input
+              className={username ? "input-field" : ""}
+              {...register("username", { required: true })}
+              placeholder="Username"
+              value={username}
+              onChange={(e) => {
+                setErrorMsg(""), setUsername(e.target.value);
+              }}
+            />
+          </div>
+          <input
+            className={password ? "input-field" : ""}
+            {...register("password", { required: true })}
+            placeholder="Password"
+            value={password}
+            type="password"
+            onChange={(e) => {
+              setErrorMsg(""), setPassword(e.target.value);
+            }}
+          />
+          <span className="errMsg" style={{ color: "red" }}>
+            {ErrorMsg}{" "}
+          </span>
+          <br />
+          <button id="loginBtn" type="submit">
+            כניסה
+          </button>
+          <br />
+          אין לך עדיין משתמש? <Link to="/register">הרשמה</Link>
+        </form>
+      )}
+    </>
   );
 }
 
 Login.propTypes = {
   users: PropTypes.array.isRequired,
-  lastRegistered : PropTypes.string
+  lastRegistered: PropTypes.string,
 };
 
 export default Login;
