@@ -1,4 +1,4 @@
-import { cities } from "../assets/cities";
+import { cities } from "../assets/citiesAndMonths";
 
 const Validations = (name, value, password = null) => {
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,}$/;

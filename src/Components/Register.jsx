@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validations from "./Validations";
 
-import { cities } from "../assets/cities";
+import { cities } from "../assets/citiesAndMonths";
 import PropTypes from "prop-types";
 
 import "../Styles/Register.css";
