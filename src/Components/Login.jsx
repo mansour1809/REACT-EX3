@@ -7,7 +7,8 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 
 function Login(props) {
-  const { register, handleSubmit } = useForm();
+  // sessionStorage.clear()
+  const { register} = useForm();
   const { state } = useLocation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,11 +17,13 @@ function Login(props) {
   const allUsers = state?.users || props.users;
   const [loginSuccess, setLoginSuccess] = useState(false); // Track login success
 
-  const submit = () => {
+  const submit = (e) => {
+    e.preventDefault()
     loginUser(username, password);
   };
 
   const loginUser = (username, password) => {
+    const valid = allUsers.find((u) => u.username == username && u.password == password ? u : false);
     if (username === "admin" && password === "ad12343211ad") {
       sessionStorage.setItem(
         "user",
@@ -28,10 +31,8 @@ function Login(props) {
       );
       setLoginSuccess(true); // Set success
       setTimeout(() =>navigate("/systemAdmin", { state: { users: allUsers } }), 1200);
-       return;
     }
-    const valid = allUsers.find((u) => u.username == username && u.password == password ? u : false);
-    if (valid) {
+    else if (valid) {
       sessionStorage.setItem("user", JSON.stringify(valid));
       setLoginSuccess(true); // Set success
       setTimeout(() => navigate("/profile", { state: { user: valid } }), 1200); // redirect to profile page
@@ -39,14 +40,13 @@ function Login(props) {
   };
 
   useEffect(() => {
-    // fill the inputs id we route from the register
+    // fill the inputs id whe route from the register
         if (state?.lastRegistered) {
-      // setLoginSuccess(true); // Set success
         setUsername(state.lastRegistered);
         setPassword(state.lastRegisteredPass);
-        // ניקוי ה-state כדי שלא יישמר בהיסטוריה
         window.history.replaceState({}, document.title);//clear the state value
     } 
+    sessionStorage.clear()
 }, [state]);
 
   return (

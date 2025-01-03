@@ -42,12 +42,29 @@ function Register(props) {
   };
 
   const handleChange = (name, e) => {
-    setErrors((prev) => ({ ...prev, [name]: "" }));
-    setFormData({ ...formData, [name]: e.target.value });
     if (name === "img") {
-      const validation = Validations(name, e.target.files[0]);
-      setErrors((prev) => ({ ...prev, [name]: validation }));
-      if (validation) e.target.value = null;
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        // Set up the onloadend event to update formData once the file is read
+        reader.onloadend = () => {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: reader.result, // Base64 string after reading the file
+          }));
+        };
+        // Read the file as a base64 string
+        reader.readAsDataURL(file);
+        // Validation for the image
+        const validation = Validations(name, file);
+        setErrors((prev) => ({ ...prev, [name]: validation }));
+        if (validation) e.target.value = null;
+      }
+    } else {
+      //empty the field when typing
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+      //set the value 
+      setFormData({ ...formData, [name]: e.target.value });
     }
   };
 
@@ -73,9 +90,11 @@ function Register(props) {
     const users = props.users; // get the existing users from local storage
     const isUserNameExist = users.find((u) => u.username === formData.username);
     const isEmailExist = users.find((u) => u.email === formData.email);
-    if (isUserNameExist || formData.username === "admin") // checking if the userName exist
+    if (isUserNameExist || formData.username === "admin")
+      // checking if the userName exist
       setErrors({ username: "user name already exist" });
-    else if (isEmailExist) setErrors({ email: "email already exist" });//checki f the email exist
+    else if (isEmailExist)
+      setErrors({ email: "email already exist" }); //checki f the email exist
     else {
       users.push(formData); // add the new user to the array
       localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
