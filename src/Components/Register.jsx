@@ -71,10 +71,11 @@ function Register(props) {
   const registerUser = () => {
     setErrors({});
     const users = props.users; // get the existing users from local storage
-    const isExist = users.find((u) => u.username === formData.username);
-    if (isExist || formData.username === "admin")
-      // checking if the userName exist
+    const isUserNameExist = users.find((u) => u.username === formData.username);
+    const isEmailExist = users.find((u) => u.email === formData.email);
+    if (isUserNameExist || formData.username === "admin") // checking if the userName exist
       setErrors({ username: "user name already exist" });
+    else if (isEmailExist) setErrors({ email: "email already exist" });//checki f the email exist
     else {
       users.push(formData); // add the new user to the array
       localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
@@ -99,6 +100,7 @@ function Register(props) {
       {isRedirecting ? (
         <div className="spinner-container">
           <div className="spinner"></div>
+          <p style={{ color: "green" }}>Registered successfully</p>
           <p style={{ color: "green" }}>Redirecting to login...</p>
         </div>
       ) : (

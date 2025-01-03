@@ -1,12 +1,17 @@
 // Profile.jsx
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
+import { useEffect } from 'react';
 
 function Profile() {
-  const {state} = useLocation();
-  console.log(state)
-  const user = state
-  console.log(user)
+  const navigate = useNavigate();
+
+  const user = sessionStorage.getItem("user")
+  
+  useEffect(() => {
+  if(!user)
+    navigate("/");  
+  })
   
 
   return (
