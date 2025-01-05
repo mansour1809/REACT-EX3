@@ -10,15 +10,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { monthsInHebrew } from "../assets/citiesAndMonths";
 import { useEffect, useState } from "react";
 import {Card,CardContent,Box,Typography,Button,Stack,Avatar} from "@mui/material";
+import EditDetails from "./EditDetails";
 
 function Profile() {
-  const [game, setGame] = useState(
-    "https://www.yad.com/Minecraft-Blockman-Go#goog_game_inter"
-  );
+  const game="https://www.yad.com/Minecraft-Blockman-Go#goog_game_inter"
+  
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { state } = useLocation();
   const navigate = useNavigate();
-  const user = state?.user;
+  // const user = state?.user;
+  const [user, setUser] = useState(state?.user || JSON.parse(sessionStorage.getItem("user")));
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     if (!sessionStorage.getItem("user")) {
@@ -61,9 +63,24 @@ function Profile() {
     });
   };
 
+  const handleUpdateUser = (updatedData) => {
+    // Update the local user state to reflect changes
+    const updatedUser = { ...user, ...updatedData };
+    setUser(updatedUser);
+
+    // Update sessionStorage and localStorage
+    sessionStorage.setItem("user", JSON.stringify(updatedUser));
+    const users = JSON.parse(localStorage.getItem("users"));
+    const updatedUsers = users.map((u) => 
+      u.email === user.email ? updatedUser : u
+    );
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+  };
+
 
 
   return (
+    <>
     <Card
       sx={{
         maxWidth: 470,
@@ -159,12 +176,19 @@ function Profile() {
           >
             למשחק
           </Button>
-          <Button variant="contained" color="primary" endIcon={<EditIcon />}>
-            עדכן פרטים
-          </Button>
+          <Button 
+                    onClick={() => setShowEditForm(!showEditForm)}
+                    variant="contained" 
+                    color="primary" 
+                    endIcon={<EditIcon />}
+                >
+                    עדכן פרטים
+                </Button>
         </Stack>
       </CardContent>
     </Card>
+                {showEditForm && <EditDetails onUpdate={handleUpdateUser} closeForm={() => setShowEditForm(false)}/>}
+</>
   );
 }
 
