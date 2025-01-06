@@ -15,12 +15,12 @@ function Register(props) {
     const users = props.users; // get the existing users from local storage
     const isExist = users.find((u) => u.username === formData.username);
     const isEmExist = users.find((u) => u.email === formData.email);
-if(isExist)
+if(isExist)//checks if username already exist
 {
   setErrors((prev) => ({ ...prev, ["username"]:"שם המשתמש כבר קיים, אנא בחר שם משתמש אחר"  }));
   return;
 }
-if(isEmExist)
+if(isEmExist)//checks if email already exist
 {
   setErrors((prev) => ({ ...prev, ["email"]: "האימייל כבר קיים, בחר כתובת אחרת" }));
   return;
@@ -44,7 +44,7 @@ if(isEmExist)
       <Link to="/" className="back-button">
         Back to Login
       </Link>
-      {isRedirecting ? (
+      {isRedirecting ? ( // redirectiong to login page with username and password
         <div className="spinner-container">
           <div className="spinner"></div>
           <p style={{ color: "green" }}>ההרשמה בוצעה בהצלחה</p>

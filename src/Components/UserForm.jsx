@@ -50,10 +50,10 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
         reader.onloadend = () => {
           setFormData((prevData) => ({
             ...prevData,
-            [name]: reader.result, // Base64 string after reading the file
+            [name]: reader.result, // base64 string after reading the file
           }));
         };
-        // Read the file as a base64 string
+        // read the file as a base64 string
         reader.readAsDataURL(file);
         // Validation for the image
         const validation = Validations(name, file);
@@ -132,7 +132,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       />
       {isEditMode && formData.img && (
         <div className="current-image">
-          <p>Current Profile Picture:</p>
+          <p>:תמונה נוכחית</p>
           <img
             src={formData.img}
             alt="Current Profile"
@@ -213,7 +213,6 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
         name="street"
         placeholder="רחוב"
         value={formData.street}
-        // title="שם הרחוב צריך להיות באותיות עברית בלבד"
         onChange={(e) => handleChange("street", e)}
         onBlur={(e) => handleBlur("street", e)}
         required

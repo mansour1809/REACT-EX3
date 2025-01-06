@@ -7,7 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 export default function NavBar() {
   const navigate = useNavigate();
   const userData = sessionStorage.getItem("user");
-  const userName = userData ? JSON.parse(userData).username : ""; // Safely parse user data
+  const userName = userData ? JSON.parse(userData).username : ""; //parse user data
   const logoutAdmin = () => {
     Swal.fire({
       title: "?האם אתה בטוח",

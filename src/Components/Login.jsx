@@ -20,7 +20,7 @@ function Login(props) {
   const [loginSuccess, setLoginSuccess] = useState(false); // Track login success
   const [showPassword, setShowPassword] = useState(false); // Track password visibility
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = () => { //toggle password visibility
     setShowPassword((prev) => !prev);
   };
   const submit = (e) => {
@@ -32,7 +32,7 @@ function Login(props) {
     const valid = allUsers.find((u) =>
       u.username == username && u.password == password ? u : false
     );
-    if (username === "admin" && password === "ad12343211ad") {
+    if (username === "admin" && password === "ad12343211ad") { //chekcs if the user is the admin
       sessionStorage.setItem(
         "user",
         JSON.stringify({ username: username, password: password })
@@ -64,7 +64,7 @@ function Login(props) {
       {loginSuccess ? (
         <div className="spinner-container">
           <div className="spinner"></div>
-          <p style={{ color: "green" }}>Welcome! , {username}</p>
+          <p style={{ color: "green" }} > {username}, שלום  </p>
         </div>
       ) : (
         <form onSubmit={submit} style={{ marginTop: 100 }}>
@@ -85,12 +85,12 @@ function Login(props) {
           {...register("password", { required: true })}
           placeholder="סיסמא"
           value={password}
-          type={showPassword ? "text" : "password"} // Toggle type based on state
+          type={showPassword ? "text" : "password"} // toggle type based on state
           onChange={(e) => {
             setErrorMsg("");
             setPassword(e.target.value);
           }}
-          style={{ paddingRight: "30px" }} // Adjust padding for the icon
+          style={{ paddingRight: "30px" }} // adjust padding for the icon
         />
         <span
           onClick={togglePasswordVisibility}
