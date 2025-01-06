@@ -92,7 +92,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="text"
         name="username"
-        placeholder="Username"
+        placeholder="שם משתמש"
         value={formData.username}
         disabled={fromAdmin}
         onChange={(e) => handleChange("username", e)}
@@ -103,7 +103,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder="סיסמא"
         value={formData.password}
         disabled={fromAdmin}
         onChange={(e) => handleChange("password", e)}
@@ -114,7 +114,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="password"
         name="confirmPassword"
-        placeholder="Confirm Password"
+        placeholder="אימות סיסמא"
         value={formData.confirmPassword}
          disabled={fromAdmin}
         onChange={(e) => handleChange("confirmPassword", e)}
@@ -125,7 +125,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="file"
         name="img"
-        placeholder="Profile Picture"
+        placeholder="תמונת פרופיל"
         onChange={(e) => handleChange("img", e)}
         onBlur={(e) => handleBlur("img", e)}
         required={!isEditMode} // Required only in register mode
@@ -145,7 +145,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="text"
         name="firstName"
-        placeholder="First Name"
+        placeholder="שם פרטי"
         value={formData.firstName}
         // disabled={isEditMode}
         onChange={(e) => handleChange("firstName", e)}
@@ -157,7 +157,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="text"
         name="lastName"
-        placeholder="Last Name"
+        placeholder="שם משפחה"
         value={formData.lastName}
         // disabled={isEditMode}
         onChange={(e) => handleChange("lastName", e)}
@@ -169,7 +169,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="email"
         name="email"
-        placeholder="Email"
+        placeholder="דוא'ל"
         value={formData.email}
         disabled={isEditMode}
         // title="Email must contain exactly one @ followed by .com"
@@ -182,7 +182,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="date"
         name="birthDate"
-        placeholder="Birth Date"
+        placeholder="תאריך לידה"
         value={formData.birthDate}
         // disabled={isEditMode}
         onChange={(e) => handleChange("birthDate", e)}
@@ -195,7 +195,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
         type="text"
         name="city"
         value={formData.city}
-        placeholder="City"
+        placeholder="עיר מגורים"
         list="cities"
         onChange={(e) => handleChange("city", e)}
         onBlur={(e) => handleBlur("city", e)}
@@ -211,7 +211,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
       <input
         type="text"
         name="street"
-        placeholder="Street"
+        placeholder="רחוב"
         value={formData.street}
         // title="שם הרחוב צריך להיות באותיות עברית בלבד"
         onChange={(e) => handleChange("street", e)}
