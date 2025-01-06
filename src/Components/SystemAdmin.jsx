@@ -14,15 +14,44 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import NavBar from "./NavBar";
 import { monthsInHebrew } from "../assets/citiesAndMonths";
+import { useNavigate } from "react-router-dom";
+import EditDetails from "./EditDetails";
 
 export default function SystemAdmin() {
+  const [selectedUser,setSelectedUser] = useState({});
   const [users, setUsers] = useState(
     JSON.parse(localStorage.getItem("users")) || []
   );
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("user")) {
+      setIsLoggedIn(false);
+      setTimeout(() => navigate("/"), 1200); // redirect to login page
+    }
+  }, [navigate]);
+
+  if (!isLoggedIn) {
+    return (
+      <p
+        style={{
+          color: "red",
+          fontWeight: "bold",
+          fontSize: "18px",
+          textAlign: "center",
+          marginTop: "50px",
+        }}
+      >
+        Unauthorized access. Please log in first.
+      </p>
+    );
+  }
 
   const handleDelete = (userToDelete) => {
     Swal.fire({
@@ -41,6 +70,15 @@ export default function SystemAdmin() {
         setUsers(updatedUsers);
       }
     });
+  };
+
+  const handleUpdateUser = (updatedUser) => {
+    const users = JSON.parse(localStorage.getItem("users"));
+    const updatedUsers = users.map((u) =>
+      u.email === selectedUser.email ? updatedUser : u
+    );
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUsers(updatedUsers)
   };
 
   return (
@@ -90,6 +128,10 @@ export default function SystemAdmin() {
                           "&:hover": { backgroundColor: "primary.dark" },
                           color: "white",
                         }}
+                        onClick={() => {
+                          setShowEditForm(!showEditForm);
+                          setSelectedUser(user);
+                        }}
                       >
                         <EditIcon sx={{ fontSize: 16 }} />
                       </IconButton>
@@ -110,7 +152,7 @@ export default function SystemAdmin() {
                   <TableCell align="center" sx={{ width: "25%" }}>
                     {user.email}
                   </TableCell>
-                  <TableCell align="center" sx={{ width: "15%" }}>
+                  <TableCell align="center" sx={{ width: "15%" }} dir="rtl">
                     {hebrewFromatDate(user.birthDate)}
                   </TableCell>
                   <TableCell
@@ -121,17 +163,19 @@ export default function SystemAdmin() {
                     align="center"
                     sx={{ width: "15%" }}
                   >{`${user.firstName} ${user.lastName}`}</TableCell>
-                  <TableCell  align="center" sx={{ width: "20%", }}>
-                  <Stack
-    direction="row" // Horizontally align the avatar and username
-    spacing={1} // Add spacing between the avatar and username
-    sx={{
-      justifyContent: 'center', // Ensures the entire Stack (Avatar + Typography) is centered
-      alignItems: 'center', // Vertically align them
-      textAlign:'left'
-    }}
-  >
-                      <Typography sx={{ fontWeight: 'bold' }}>{user.username}</Typography>
+                  <TableCell align="center" sx={{ width: "20%" }}>
+                    <Stack
+                      direction="row" // Horizontally align the avatar and username
+                      spacing={1} // Add spacing between the avatar and username
+                      sx={{
+                        justifyContent: "center", // Ensures the entire Stack (Avatar + Typography) is centered
+                        alignItems: "center", // Vertically align them
+                        textAlign: "left",
+                      }}
+                    >
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        {user.username}
+                      </Typography>
                       <Avatar
                         src={user.img}
                         alt="User Avatar"
@@ -159,6 +203,14 @@ export default function SystemAdmin() {
           )}
         </Table>
       </TableContainer>
+      {showEditForm && (
+        <EditDetails
+          onUpdate={handleUpdateUser}
+          closeForm={() => setShowEditForm(false)}
+          isFromAdmin={true} // Pass this flag to indicate admin update
+          user={selectedUser} // Pass the selected user to the form
+        />
+      )}
     </>
   );
 }

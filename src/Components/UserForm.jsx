@@ -7,6 +7,7 @@ import "../Styles/Register.css";
 import PropTypes from "prop-types";
 
 export default function UserForm({ initialData, isEditMode, onSubmit }) {
+    
   const [formData, setFormData] = useState(
     initialData || {
       username: "",
@@ -135,7 +136,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit }) {
           <img
             src={formData.img}
             alt="Current Profile"
-            style={{ width: "100px", height: "100px", objectFit: "cover",borderRadius:"50%" }}
+            style={{ width: "70px", height: "70px", objectFit: "cover",borderRadius:"50%" }}
           />
         </div>
       )}
