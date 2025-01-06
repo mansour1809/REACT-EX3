@@ -24,51 +24,50 @@ const Validations = (name, value, password = null) => {
   switch (name) {
     case "username":
       return !userNameRegex.test(value)
-        ? "invalid , only Latin letters, numbers, and special characters are allowed"
+        ? "לא חוקי, רק אותיות לטיניות, מספרים ותווים מיוחדים מותרים"
         : value.length > 60
-        ? "the text should be less than 60 charachters"
+        ? "הטקסט צריך להיות פחות מ-60 תווים"
         : isExist(value)
-        ? "the username already exist, please choose a different username"
+        ? "שם המשתמש כבר קיים, אנא בחר שם משתמש אחר"
         : "";
     case "password":
-      return !passwordRegex.test(value) ? "password must contain between 7 to 12 characters. At least one special character, one uppercase letter, and one number." : "";
-
+      return !passwordRegex.test(value) ? "הסיסמה חייבת להכיל בין 7 ל-12 תווים. לפחות תו מיוחד אחד, אות אחת גדולה ומספר אחד." : "";
     case "confirmPassword":
-      return password === value ? "" : "Passwords are not the same..";
+      return password === value ? "" : "הסיסמאות אינן זהות..";
 
     case "street":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "street needs to be in hebrew letters...";
+        : "הרחוב צריך להיות באותיות עבריות...";
 
     case "email":
       return !emailRegex.test(value)
-        ? "email format need to be in Latin letters and special characters. The '@' character can appear only once, at the end"
+        ? "אותיות לטיניות ותווים מיוחדים. התו '@' יכול להופיע רק פעם אחת, בסוף"
         : isEmailExist(value)
-        ? "the email already exist, choose a different email address"
+        ? "האימייל כבר קיים, בחר כתובת אחרת"
         : "";
 
     case "lastName":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "lastName needs to be in hebrew letters...";
+        : "שם משפחה צריך להיות באותיות עבריות...";
 
     case "firstName":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "firstName needs to be in hebrew letters...";
+        : "השם הפרטי צריך להיות באותיות עבריות...";
 
     case "birthDate":
-      return validDate(value) ? "" : "age should be between 18 and 120...";
+      return validDate(value) ? "" : "הגיל צריך להיות בין 18 ל-120...";
 
     case "city":
       return cities.includes(value) //check if the input is in the list
         ? ""
-        : "need to choose from the list...";
+        : "צריך לבחור מהרשימה...";
 
     case "img":
       return value.type !== "image/jpeg" && value.type !== "image/jpg"
-        ? "the file need to be in jpeg or jpg format..."
+        ? "הקובץ צריך להיות בפורמט jpeg או jpg..."
         : "";
 
     default:
