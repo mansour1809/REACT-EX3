@@ -24,39 +24,39 @@ const Validations = (name, value, password = null) => {
   switch (name) {
     case "username":
       return !userNameRegex.test(value)
-        ? "invalid , should be..."
+        ? "invalid , only Latin letters, numbers, and special characters are allowed"
         : value.length > 60
         ? "the text should be less than 60 charachters"
         : isExist(value)
-        ? "the username already exist, choose diff.."
+        ? "the username already exist, please choose a different username"
         : "";
     case "password":
-      return !passwordRegex.test(value) ? "password need to contain...." : "";
+      return !passwordRegex.test(value) ? "password must contain between 7 to 12 characters. At least one special character, one uppercase letter, and one number." : "";
 
     case "confirmPassword":
-      return password === value ? "" : "not the same..";
+      return password === value ? "" : "Passwords are not the same..";
 
     case "street":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "street need to be in hebrew letters...";
+        : "street needs to be in hebrew letters...";
 
     case "email":
       return !emailRegex.test(value)
-        ? "email format need to ...."
+        ? "email format need to be in Latin letters and special characters. The '@' character can appear only once, at the end"
         : isEmailExist(value)
-        ? "the email already exist, choose diff.."
+        ? "the email already exist, choose a different email address"
         : "";
 
     case "lastName":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "lastName need to be in hebrew letters...";
+        : "lastName needs to be in hebrew letters...";
 
     case "firstName":
       return hebrewLettersRegex.test(value)
         ? ""
-        : "firstName need to be in hebrew letters...";
+        : "firstName needs to be in hebrew letters...";
 
     case "birthDate":
       return validDate(value) ? "" : "age should be between 18 and 120...";
