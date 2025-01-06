@@ -7,19 +7,19 @@ const Validations = (name, value, password = null) => {
   const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
   const userNameRegex = /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\/]*$/;
 
-  //check if the username already exist or not
-  const isExist = (name) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const isE = users.find((u) => u.username === name);
-    return isE ? true : false;
-  };
+  // //check if the username already exist or not
+  // const isExist = (name) => {
+  //   const users = JSON.parse(localStorage.getItem("users")) || [];
+  //   const isE = users.find((u) => u.username === name);
+  //   return isE ? true : false;
+  // };
 
-  //check if the email already exist or not
-  const isEmailExist = (email) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const isE = users.find((u) => u.email === email);
-    return isE ? true : false;
-  };
+  // //check if the email already exist or not
+  // const isEmailExist = (email) => {
+  //   const users = JSON.parse(localStorage.getItem("users")) || [];
+  //   const isE = users.find((u) => u.email === email);
+  //   return isE ? true : false;
+  // };
 
   switch (name) {
     case "username":
@@ -27,8 +27,8 @@ const Validations = (name, value, password = null) => {
         ? "לא חוקי, רק אותיות לטיניות, מספרים ותווים מיוחדים מותרים"
         : value.length > 60
         ? "הטקסט צריך להיות פחות מ-60 תווים"
-        : isExist(value)
-        ? "שם המשתמש כבר קיים, אנא בחר שם משתמש אחר"
+        // : isExist(value)
+        // ? "שם המשתמש כבר קיים, אנא בחר שם משתמש אחר"
         : "";
     case "password":
       return !passwordRegex.test(value) ? "הסיסמה חייבת להכיל בין 7 ל-12 תווים. לפחות תו מיוחד אחד, אות אחת גדולה ומספר אחד." : "";
@@ -43,8 +43,8 @@ const Validations = (name, value, password = null) => {
     case "email":
       return !emailRegex.test(value)
         ? "אותיות לטיניות ותווים מיוחדים. התו '@' יכול להופיע רק פעם אחת, בסוף"
-        : isEmailExist(value)
-        ? "האימייל כבר קיים, בחר כתובת אחרת"
+        // : isEmailExist(value)
+        // ? "האימייל כבר קיים, בחר כתובת אחרת"
         : "";
 
     case "lastName":

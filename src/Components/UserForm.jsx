@@ -230,7 +230,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}
         required
       />
 
-      <button type="submit">{isEditMode ? "Update" : "Register"}</button>
+      <button type="submit">{isEditMode ? "עדכן" : "הירשם"}</button>
     </form>
   );
 }
