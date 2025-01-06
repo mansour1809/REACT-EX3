@@ -2,7 +2,7 @@ import { cities } from "../assets/citiesAndMonths";
 
 const Validations = (name, value, password = null) => {
   //pattern using regex
-  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,12}$/;
   const hebrewLettersRegex = /^[\u0590-\u05FF\s]+$/;
   const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
   const userNameRegex = /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\/]*$/;
@@ -82,13 +82,13 @@ const validDate = (value) => {
   const today = new Date();
   let age = today.getFullYear() - selectedDate.getFullYear();
   const monthDiff = today.getMonth() - selectedDate.getMonth();
-  // If the birthday hasn't occurred this year yet
+  // if the birthday hasn't occurred this year yet
   if (
     monthDiff < 0 ||
     (monthDiff === 0 && today.getDate() < selectedDate.getDate())
   )
     age--;
-  // Validate age range
+  // validate age range
   return age < 18 || age > 120 ? false : true;
 };
 

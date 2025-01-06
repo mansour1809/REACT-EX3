@@ -23,23 +23,22 @@ import NavBar from "./NavBar";
 
 function Profile() {
   const game = "https://www.yad.com/Minecraft-Blockman-Go#goog_game_inter";
-
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { state } = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState(
-    state?.user || JSON.parse(sessionStorage.getItem("user"))
+    state?.user || JSON.parse(sessionStorage.getItem("user")) //if route from the register -> stat.user
   );
   const [showEditForm, setShowEditForm] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => {//if the session storage is null
     if (!sessionStorage.getItem("user")) {
       setIsLoggedIn(false);
       setTimeout(() => navigate("/"), 1200); // redirect to login page
     }
   }, [navigate]);
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn) {// if the user route to profile not by clicking on the login button
     return (
       <p
         style={{
@@ -55,6 +54,7 @@ function Profile() {
     );
   }
 
+  //logout, asking if sure
   const logoutUser = () => {
     Swal.fire({
       title: "?האם אתה בטוח",
@@ -74,11 +74,11 @@ function Profile() {
   };
 
   const handleUpdateUser = (updatedData) => {
-    // Update the local user state to reflect changes
+    // update the local user state to reflect changes
     const updatedUser = { ...user, ...updatedData };
     setUser(updatedUser);
 
-    // Update sessionStorage and localStorage
+    // update sessionStorage and localStorage
     sessionStorage.setItem("user", JSON.stringify(updatedUser));
     const users = JSON.parse(localStorage.getItem("users"));
     const updatedUsers = users.map((u) =>
@@ -109,7 +109,7 @@ function Profile() {
             marginBottom: 2,
           }}
         >
-          <Avatar
+          <Avatar //circular profil pic
             src={user.img}
             alt="User Avatar"
             sx={{
@@ -180,12 +180,12 @@ function Profile() {
                   backgroundColor: "#235f26",
                 },
               }}
-              onClick={() => window.open(game, "_blank")}
+              onClick={() => window.open(game, "_blank")}//open it in new tab
             >
               למשחק
             </Button>
             <Button
-              onClick={() => setShowEditForm(!showEditForm)}
+              onClick={() => setShowEditForm(!showEditForm)}//toggle the form
               variant="contained"
               color="primary"
               endIcon={<EditIcon />}
@@ -195,7 +195,7 @@ function Profile() {
           </Stack>
         </CardContent>
       </Card>
-      {showEditForm && (
+      {showEditForm && (//editing mode
         <EditDetails
           onUpdate={handleUpdateUser}
           closeForm={() => setShowEditForm(false)}
@@ -207,7 +207,7 @@ function Profile() {
 
 export default Profile;
 
-function hebrewFromatDate(dateString) {
+function hebrewFromatDate(dateString) { // hebrew fromat date
   const date = new Date(dateString);
   return `${date.getDate().toString().padStart(2, "0")} ${
     monthsInHebrew[date.getMonth()]
