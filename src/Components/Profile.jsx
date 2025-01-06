@@ -11,6 +11,7 @@ import { monthsInHebrew } from "../assets/citiesAndMonths";
 import { useEffect, useState } from "react";
 import {Card,CardContent,Box,Typography,Button,Stack,Avatar} from "@mui/material";
 import EditDetails from "./EditDetails";
+import NavBar from "./NavBar";
 
 function Profile() {
   const game="https://www.yad.com/Minecraft-Blockman-Go#goog_game_inter"
@@ -18,7 +19,6 @@ function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { state } = useLocation();
   const navigate = useNavigate();
-  // const user = state?.user;
   const [user, setUser] = useState(state?.user || JSON.parse(sessionStorage.getItem("user")));
   const [showEditForm, setShowEditForm] = useState(false);
 
@@ -81,6 +81,7 @@ function Profile() {
 
   return (
     <>
+    <NavBar/>
     <Card
       sx={{
         maxWidth: 470,

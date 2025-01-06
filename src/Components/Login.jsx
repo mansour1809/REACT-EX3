@@ -5,6 +5,8 @@ import "../App.css";
 import "../index.css";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
 
 function Login(props) {
   // sessionStorage.clear()
@@ -100,7 +102,7 @@ function Login(props) {
             cursor: "pointer",
           }}
         >
-          {showPassword ? "🙈" : "👁️"} 
+          {showPassword ? <VisibilityOffIcon/> : <Visibility/>} 
         </span>
       </div>
           <span className="errMsg" style={{ color: "red" }}>
