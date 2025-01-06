@@ -30,14 +30,14 @@ export default function SystemAdmin() {
   const navigate = useNavigate();
   const [showEditForm, setShowEditForm] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => {//if the session storage is null
     if (!sessionStorage.getItem("user")) {
       setIsLoggedIn(false);
       setTimeout(() => navigate("/"), 1200); // redirect to login page
     }
   }, [navigate]);
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn) {// if the user route to profile not by clicking on the login button
     return (
       <p
         style={{
@@ -53,7 +53,7 @@ export default function SystemAdmin() {
     );
   }
 
-  const handleDelete = (userToDelete) => {
+  const handleDelete = (userToDelete) => {//delete a user
     Swal.fire({
       title: "?האם אתה בטוח",
       text: "!לא תוכל לשחזר משתמש זה",
@@ -66,17 +66,20 @@ export default function SystemAdmin() {
         const updatedUsers = users.filter(
           (user) => user.email !== userToDelete.email
         );
+        //updating the state and the local storage after delete the user
         localStorage.setItem("users", JSON.stringify(updatedUsers));
         setUsers(updatedUsers);
       }
     });
   };
 
+  //updates part of user details
   const handleUpdateUser = (updatedUser) => {
     const users = JSON.parse(localStorage.getItem("users"));
     const updatedUsers = users.map((u) =>
       u.email === selectedUser.email ? updatedUser : u
     );
+    //update the local storage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     setUsers(updatedUsers)
   };
@@ -129,8 +132,8 @@ export default function SystemAdmin() {
                           color: "white",
                         }}
                         onClick={() => {
-                          setShowEditForm(!showEditForm);
-                          setSelectedUser(user);
+                          setShowEditForm(!showEditForm);//toggle the form
+                          setSelectedUser(user); //selected uesr..
                         }}
                       >
                         <EditIcon sx={{ fontSize: 16 }} />
