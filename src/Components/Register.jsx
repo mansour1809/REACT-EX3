@@ -13,7 +13,18 @@ function Register(props) {
   const registerUser = (formData, setErrors) => {
     setErrors({});
     const users = props.users; // get the existing users from local storage
-
+    const isExist = users.find((u) => u.username === formData.username);
+    const isEmExist = users.find((u) => u.email === formData.email);
+if(isExist)
+{
+  setErrors((prev) => ({ ...prev, ["username"]:"שם המשתמש כבר קיים, אנא בחר שם משתמש אחר"  }));
+  return;
+}
+if(isEmExist)
+{
+  setErrors((prev) => ({ ...prev, ["email"]: "האימייל כבר קיים, בחר כתובת אחרת" }));
+  return;
+}
     users.push(formData); // add the new user to the array
     localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
     setIsRedirecting(true);
