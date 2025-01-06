@@ -6,8 +6,8 @@ import { cities } from "../assets/citiesAndMonths";
 import "../Styles/Register.css";
 import PropTypes from "prop-types";
 
-export default function UserForm({ initialData, isEditMode, onSubmit }) {
-    
+export default function UserForm({ initialData, isEditMode, onSubmit ,fromAdmin}) {
+
   const [formData, setFormData] = useState(
     initialData || {
       username: "",
@@ -94,7 +94,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit }) {
         name="username"
         placeholder="Username"
         value={formData.username}
-        // disabled={isEditMode}
+        disabled={fromAdmin}
         onChange={(e) => handleChange("username", e)}
         onBlur={(e) => handleBlur("username", e)}
         required
@@ -105,7 +105,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit }) {
         name="password"
         placeholder="Password"
         value={formData.password}
-        // disabled={isEditMode}
+        disabled={fromAdmin}
         onChange={(e) => handleChange("password", e)}
         onBlur={(e) => handleBlur("password", e)}
         required
@@ -116,7 +116,7 @@ export default function UserForm({ initialData, isEditMode, onSubmit }) {
         name="confirmPassword"
         placeholder="Confirm Password"
         value={formData.confirmPassword}
-        // disabled={isEditMode}
+         disabled={fromAdmin}
         onChange={(e) => handleChange("confirmPassword", e)}
         onBlur={(e) => handleBlur("confirmPassword", e)}
         required
@@ -251,4 +251,5 @@ UserForm.propTypes = {
   initialData: PropTypes.object,
   isEditMode: PropTypes.bool,
   onSubmit: PropTypes.func,
+  fromAdmin:PropTypes.bool
 };

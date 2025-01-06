@@ -8,7 +8,6 @@ function EditDetails({ closeForm, onUpdate, isFromAdmin, user }) {
   const currentUser = isFromAdmin
     ? user
     : JSON.parse(sessionStorage.getItem("user"));
-console.log("the current userrrrrrrrrrrrrrrrrr is ", currentUser)
   const editUser = (updatedData) => {
     const users = JSON.parse(localStorage.getItem("users"));
     const updatedUsers = users.map((u) =>
@@ -31,7 +30,7 @@ console.log("the current userrrrrrrrrrrrrrrrrr is ", currentUser)
 
   return (
     <Box mt={3}>
-      <UserForm initialData={currentUser} isEditMode={true} onSubmit={editUser} />
+      <UserForm initialData={currentUser} isEditMode={true} onSubmit={editUser} fromAdmin={isFromAdmin?true:false} />
     </Box>
   );
 }

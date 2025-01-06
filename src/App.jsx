@@ -11,13 +11,9 @@ function App() {
 
   useEffect(() => {
     setUsers(loadUsers())
-    return () => sessionStorage.clear()
+    return () => sessionStorage.clear() // clear the session storage whenever route to the home page(login)
   }, []);
 
-  // const handleLogout = () => {
-  //   sessionStorage.removeItem('user');
-  //   setUser(null);
-  // };
   const loadUsers = () => {
     const users = localStorage.getItem("users");
     return users ? JSON.parse(users) : [];// parse it to an array if there is data in local storage , else empty array

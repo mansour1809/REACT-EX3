@@ -9,31 +9,23 @@ import UserForm from "./UserForm";
 function Register(props) {
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
- 
-  const registerUser = (formData,setErrors) => {
+
+  const registerUser = (formData, setErrors) => {
     setErrors({});
     const users = props.users; // get the existing users from local storage
-    const isUserNameExist = users.find((u) => u.username === formData.username);
-    const isEmailExist = users.find((u) => u.email === formData.email);
-    if (isUserNameExist || formData.username === "admin")
-      // checking if the userName exist
-      setErrors({ username: "user name already exist" });
-    else if (isEmailExist)
-      setErrors({ email: "email already exist" }); //checki f the email exist
-    else {
-      users.push(formData); // add the new user to the array
-      localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
-      setIsRedirecting(true);
-      setTimeout(() => {
-        navigate("/", {
-          state: {
-            users: users,
-            lastRegistered: formData.username,
-            lastRegisteredPass: formData.password,
-          },
-        });
-      }, 1200);
-    }
+
+    users.push(formData); // add the new user to the array
+    localStorage.setItem("users", JSON.stringify(users)); // save to the local storage
+    setIsRedirecting(true);
+    setTimeout(() => {
+      navigate("/", {
+        state: {
+          users: users,
+          lastRegistered: formData.username,
+          lastRegisteredPass: formData.password,
+        },
+      });
+    }, 1200);
   };
 
   return (

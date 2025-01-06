@@ -8,7 +8,6 @@ export default function NavBar() {
   const navigate = useNavigate();
   const userData = sessionStorage.getItem("user");
   const userName = userData ? JSON.parse(userData).username : ""; // Safely parse user data
-  console.log(userName)
   const logoutAdmin = () => {
     Swal.fire({
       title: "?האם אתה בטוח",
