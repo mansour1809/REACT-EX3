@@ -72,7 +72,7 @@ function Login(props) {
             <input
               className={username ? "input-field" : ""}
               {...register("username", { required: true })}
-              placeholder="Username"
+              placeholder="שם משתמש"
               value={username}
               onChange={(e) => {
                 setErrorMsg(""), setUsername(e.target.value);
@@ -83,7 +83,7 @@ function Login(props) {
         <input
           className={password ? "input-field" : ""}
           {...register("password", { required: true })}
-          placeholder="Password"
+          placeholder="סיסמא"
           value={password}
           type={showPassword ? "text" : "password"} // Toggle type based on state
           onChange={(e) => {

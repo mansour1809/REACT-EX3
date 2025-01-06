@@ -36,8 +36,8 @@ function Register(props) {
       {isRedirecting ? (
         <div className="spinner-container">
           <div className="spinner"></div>
-          <p style={{ color: "green" }}>Registered successfully</p>
-          <p style={{ color: "green" }}>Redirecting to login...</p>
+          <p style={{ color: "green" }}>ההרשמה בוצעה בהצלחה</p>
+          <p style={{ color: "green" }}>מועבר לדף ההתחברות</p>
         </div>
       ) : (
         <UserForm onSubmit={registerUser} />
